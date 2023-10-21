@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Categories\GetById\" />
+    <Folder Include="Categories\GetList\" />
+    <Folder Include="Categories\DTOs\" />
+    <Folder Include="Comments\GetById\" />
+    <Folder Include="Comments\GetByFilter\" />
+    <Folder Include="Comments\DTOs\" />
+    <Folder Include="Orders\GetById\" />
+    <Folder Include="Orders\GetByFilter\" />
+    <Folder Include="Orders\DTOs\" />
+    <Folder Include="Products\GetById\" />
+    <Folder Include="Products\GetBySlug\" />
+    <Folder Include="Products\DTOs\" />
+    <Folder Include="Roles\GetById\" />
+    <Folder Include="Roles\GetList\" />
+    <Folder Include="Roles\DTOs\" />
+    <Folder Include="Sellers\GetById\" />
+    <Folder Include="Sellers\GetByFilter\" />
+    <Folder Include="Sellers\DTOs\" />
+    <Folder Include="SiteEntities\Banners\GetById\" />
+    <Folder Include="SiteEntities\Banners\GetList\" />
+    <Folder Include="SiteEntities\DTOs\" />
+    <Folder Include="SiteEntities\Sliders\GetById\" />
+    <Folder Include="SiteEntities\Sliders\GetList\" />
+    <Folder Include="Users\GetById\" />
+    <Folder Include="Users\GetByPhoneNumber\" />
+    <Folder Include="Users\DTOs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.Query\Common.Query.csproj" />
+    <ProjectReference Include="..\Shop.Infrastructure\Shop.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
