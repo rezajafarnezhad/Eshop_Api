@@ -36,5 +36,6 @@ public enum AppStatusCode : byte
     NotFount = 2,
     BadRequest = 3,
     LogicError = 4,
-    UnAuthorize = 5
+    UnAuthorize = 5,
+    ServerError=6,
 }
