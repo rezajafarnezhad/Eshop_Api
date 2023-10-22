@@ -15,6 +15,7 @@
                 Status = OperationResultStatus.Success,
                 Title = SuccessMessage,
                 Data = data,
+                Message = SuccessMessage,
             };
         }
         public static OperationResult<TData> NotFound()
