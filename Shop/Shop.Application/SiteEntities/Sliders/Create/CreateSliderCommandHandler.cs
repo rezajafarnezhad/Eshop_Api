@@ -6,7 +6,7 @@ using Shop.Domain.SiteEntities.Repositories;
 
 namespace Shop.Application.SiteEntities.Sliders.Create;
 
-internal class CreateSliderCommandHandler : IBaseCommandHandler<CreateSliderCommand>
+internal class CreateSliderCommandHandler : IBaseCommandHandler<CreateSliderCommand,long>
 {
     private readonly IFileService _fileService;
     private readonly ISliderRepository _repository;
@@ -17,7 +17,7 @@ internal class CreateSliderCommandHandler : IBaseCommandHandler<CreateSliderComm
         _repository = repository;
     }
 
-    public async Task<OperationResult> Handle(CreateSliderCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<long>> Handle(CreateSliderCommand request, CancellationToken cancellationToken)
     {
         var imageName = await _fileService
             .SaveFileAndGenerateName(request.ImageFile, Directories.SliderImages);
@@ -25,6 +25,6 @@ internal class CreateSliderCommandHandler : IBaseCommandHandler<CreateSliderComm
 
         _repository.Add(slider);
         await _repository.Save();
-        return OperationResult.Success();
+        return OperationResult<long>.Success(slider.Id);
     }
 }

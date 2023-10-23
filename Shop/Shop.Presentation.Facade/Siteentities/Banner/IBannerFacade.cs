@@ -7,7 +7,7 @@ namespace Shop.Presentation.Facade.SiteEntities.Banner;
 
 public interface IBannerFacade
 {
-    Task<OperationResult> CreateBanner(CreateBannerCommand command);
+    Task<OperationResult<long>> CreateBanner(CreateBannerCommand command);
     Task<OperationResult> EditBanner(EditBannerCommand command);
 
     Task<BannerDto?> GetBannerById(long id);

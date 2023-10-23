@@ -19,7 +19,7 @@ internal class ProductFacade : IProductFacade
         _mediator = mediator;
     }
 
-    public async Task<OperationResult> CreateProduct(CreateProductCommand command)
+    public async Task<OperationResult<long>> CreateProduct(CreateProductCommand command)
     {
         return await _mediator.Send(command);
     }

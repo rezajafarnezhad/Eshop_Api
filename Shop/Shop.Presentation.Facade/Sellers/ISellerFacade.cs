@@ -7,7 +7,7 @@ namespace Shop.Presentation.Facade.Sellers;
 
 public interface ISellerFacade
 {
-    Task<OperationResult> CreateSeller(CreateSellerCommand command);
+    Task<OperationResult<long>> CreateSeller(CreateSellerCommand command);
     Task<OperationResult> EditSeller(EditSellerCommand command);
 
     Task<SellerDto?> GetSellerById(long sellerId);

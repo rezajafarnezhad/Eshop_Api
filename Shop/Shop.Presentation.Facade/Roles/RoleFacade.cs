@@ -16,7 +16,7 @@ internal class RoleFacade : IRoleFacade
     {
         _mediator = mediator;
     }
-    public async Task<OperationResult> CreateRole(CreateRoleCommand command)
+    public async Task<OperationResult<long>> CreateRole(CreateRoleCommand command)
     {
         return await _mediator.Send(command);
     }

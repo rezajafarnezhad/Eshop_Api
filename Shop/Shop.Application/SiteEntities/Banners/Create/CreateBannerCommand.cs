@@ -4,7 +4,7 @@ using Shop.Domain.SiteEntities;
 
 namespace Shop.Application.SiteEntities.Banners.Create;
 
-public class CreateBannerCommand : IBaseCommand
+public class CreateBannerCommand : IBaseCommand<long>
 {
     public CreateBannerCommand(string link, IFormFile imageFile, BannerPosition position)
     {

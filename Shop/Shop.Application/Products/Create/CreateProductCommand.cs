@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Products.Create
 {
-    public class CreateProductCommand : IBaseCommand
+    public class CreateProductCommand : IBaseCommand<long>
     {
         public CreateProductCommand(string title, IFormFile imageFile, string description, long categoryId,
             long subCategoryId, long secondarySubCategoryId, string slug, SeoData seoData,

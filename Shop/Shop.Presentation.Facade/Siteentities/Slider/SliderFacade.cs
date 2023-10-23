@@ -17,7 +17,7 @@ internal class SliderFacade : ISliderFacade
         _mediator = mediator;
     }
 
-    public async Task<OperationResult> CreateSlider(CreateSliderCommand command)
+    public async Task<OperationResult<long>> CreateSlider(CreateSliderCommand command)
     {
         return await _mediator.Send(command);
     }

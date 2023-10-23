@@ -7,7 +7,7 @@ using Shop.Domain.ProductAgg.Services;
 
 namespace Shop.Application.Products.Create
 {
-    internal class CreateProductCommandHandler : IBaseCommandHandler<CreateProductCommand>
+    internal class CreateProductCommandHandler : IBaseCommandHandler<CreateProductCommand,long>
     {
         private readonly IProductDomainService _domainService;
         private readonly IProductRepository _repository;
@@ -20,7 +20,7 @@ namespace Shop.Application.Products.Create
             _fileService = fileService;
         }
 
-        public async Task<OperationResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult<long>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var imageName = await _fileService.SaveFileAndGenerateName(request.ImageFile, Directories.ProductImages);
             var product = new Product(request.Title, imageName, request.Description, request.CategoryId,
@@ -37,7 +37,7 @@ namespace Shop.Application.Products.Create
 
             product.SetSpecification(specifications);
             await _repository.Save();
-            return OperationResult.Success();
+            return OperationResult<long>.Success(product.Id);
         }
     }
 }

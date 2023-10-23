@@ -6,7 +6,7 @@ using Shop.Domain.UserAgg.Services;
 
 namespace Shop.Application.Users.Create;
 
-public class CreateUserCommandHandler : IBaseCommandHandler<CreateUserCommand>
+public class CreateUserCommandHandler : IBaseCommandHandler<CreateUserCommand,long>
 {
     private readonly IUserRepository _repository;
     private readonly IUserDomainService _userDomainService;
@@ -16,7 +16,7 @@ public class CreateUserCommandHandler : IBaseCommandHandler<CreateUserCommand>
         _userDomainService = userDomainService;
     }
 
-    public async Task<OperationResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<long>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var password = Sha256Hasher.Hash(request.Password);
         var user = new User(request.Name, request.Family, request.PhoneNumber
@@ -24,6 +24,6 @@ public class CreateUserCommandHandler : IBaseCommandHandler<CreateUserCommand>
 
         _repository.Add(user);
         await _repository.Save();
-        return OperationResult.Success();
+        return OperationResult<long>.Success(user.Id);
     }
 }

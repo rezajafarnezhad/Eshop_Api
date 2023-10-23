@@ -7,7 +7,7 @@ namespace Shop.Presentation.Facade.SiteEntities.Slider;
 
 public interface ISliderFacade
 {
-    Task<OperationResult> CreateSlider(CreateSliderCommand command);
+    Task<OperationResult<long>> CreateSlider(CreateSliderCommand command);
     Task<OperationResult> EditSlider(EditSliderCommand command);
 
     Task<SliderDto?> GetSliderById(long id);

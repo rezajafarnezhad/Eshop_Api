@@ -17,7 +17,7 @@ internal class SellerFacade : ISellerFacade
         _mediator = mediator;
     }
 
-    public async Task<OperationResult> CreateSeller(CreateSellerCommand command)
+    public async Task<OperationResult<long>> CreateSeller(CreateSellerCommand command)
     {
         return await _mediator.Send(command);
     }

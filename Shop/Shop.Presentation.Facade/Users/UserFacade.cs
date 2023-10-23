@@ -19,7 +19,7 @@ internal class UserFacade : IUserFacade
     }
 
 
-    public async Task<OperationResult> CreateUser(CreateUserCommand command)
+    public async Task<OperationResult<long>> CreateUser(CreateUserCommand command)
     {
         return await _mediator.Send(command);
     }

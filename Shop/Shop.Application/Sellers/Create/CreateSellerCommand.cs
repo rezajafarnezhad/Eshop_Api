@@ -2,7 +2,7 @@
 
 namespace Shop.Application.Sellers.Create;
 
-public class CreateSellerCommand:IBaseCommand
+public class CreateSellerCommand:IBaseCommand<long>
 {
     public CreateSellerCommand(long userId, string shopName, string nationalCode)
     {

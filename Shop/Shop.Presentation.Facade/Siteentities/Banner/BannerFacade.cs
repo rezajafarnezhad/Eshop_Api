@@ -16,7 +16,7 @@ internal class BannerFacade : IBannerFacade
     {
         _mediator = mediator;
     }
-    public async Task<OperationResult> CreateBanner(CreateBannerCommand command)
+    public async Task<OperationResult<long>> CreateBanner(CreateBannerCommand command)
     {
         return await _mediator.Send(command);
     }

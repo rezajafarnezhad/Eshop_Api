@@ -4,7 +4,7 @@ using Shop.Domain.RoleAgg.Repository;
 
 namespace Shop.Application.Roles.Create;
 
-public class CreateRoleCommandHandler : IBaseCommandHandler<CreateRoleCommand>
+public class CreateRoleCommandHandler : IBaseCommandHandler<CreateRoleCommand,long>
 {
     private readonly IRoleRepository _repository;
 
@@ -13,7 +13,7 @@ public class CreateRoleCommandHandler : IBaseCommandHandler<CreateRoleCommand>
         _repository = repository;
     }
 
-    public async Task<OperationResult> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<long>> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
     {
         var permissions = new List<RolePermission>();
         request.Permissions.ForEach(f =>
@@ -24,6 +24,6 @@ public class CreateRoleCommandHandler : IBaseCommandHandler<CreateRoleCommand>
          _repository.Add(role);
         await _repository.Save();
 
-        return OperationResult.Success();
+        return OperationResult<long>.Success(role.Id);
     }
 }

@@ -4,7 +4,7 @@ using Shop.Domain.UserAgg.Enums;
 
 namespace Shop.Application.Users.Create;
 
-public class CreateUserCommand : IBaseCommand
+public class CreateUserCommand : IBaseCommand<long>
 {
     public CreateUserCommand(string name, string family, string phoneNumber, string email, string password, Gender gender)
     {

@@ -10,7 +10,7 @@ namespace Shop.Presentation.Facade.Users
     {
         Task<OperationResult> RegisterUser(RegisterUserCommand command);
         Task<OperationResult> EditUser(EditUserCommand command);
-        Task<OperationResult> CreateUser(CreateUserCommand command);
+        Task<OperationResult<long>> CreateUser(CreateUserCommand command);
 
         Task<UserDto?> GetUserByPhoneNumber(string phoneNumber);
         Task<UserDto?> GetUserById(long userId);

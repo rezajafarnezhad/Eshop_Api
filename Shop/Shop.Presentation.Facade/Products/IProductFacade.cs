@@ -9,7 +9,7 @@ namespace Shop.Presentation.Facade.Products;
 
 public interface IProductFacade
 {
-    Task<OperationResult> CreateProduct(CreateProductCommand command);
+    Task<OperationResult<long>> CreateProduct(CreateProductCommand command);
     Task<OperationResult> EditProduct(EditProductCommand command);
     Task<OperationResult> AddImage(AddProductImageCommand command);
     Task<OperationResult> RemoveImage(RemoveProductImageCommand command);
