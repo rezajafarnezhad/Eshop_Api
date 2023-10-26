@@ -14,7 +14,7 @@ namespace Shop.Domain.UserAgg
     {
         private User()
         {
-            
+
         }
         public User(string name, string family, string phoneNumber, string email,
             string password, Gender gender, IUserDomainService userDomainService)
@@ -29,7 +29,10 @@ namespace Shop.Domain.UserAgg
             Gender = gender;
             AvatarName = "avatar.png";
             IsActive = true;
-
+            Roles = new();
+            Wallets = new();
+            Addresses = new();
+            UserTokens = new();
         }
 
         public string Name { get; private set; }
@@ -43,6 +46,7 @@ namespace Shop.Domain.UserAgg
         public List<UserRole> Roles { get; private set; }
         public List<Wallet> Wallets { get; private set; }
         public List<UserAddress> Addresses { get; private set; }
+        public List<UserToken> UserTokens { get; private set; }
 
         public void Edit(string name, string family, string phoneNumber, string email,
             Gender gender, IUserDomainService userDomainService)
@@ -106,17 +110,29 @@ namespace Shop.Domain.UserAgg
             Roles.AddRange(roles);
         }
 
+
+        public void AddToken(string hashJwtToken, string hashJwtRefreshToken, DateTime expireDateToken, DateTime expireDateRefreshToken, string device)
+        {
+            var activeTokensCount = UserTokens.Count(c => c.ExpireDateRefreshToken > DateTime.Now);
+            if (activeTokensCount == 3)
+                throw new InvalidDomainDataException("امکان استفاده از 4 دستگاه وجود ندارد");
+
+            var token = new UserToken(hashJwtToken, hashJwtRefreshToken, expireDateToken, expireDateRefreshToken, device);
+            token.UserId = Id;
+            UserTokens.Add(token);
+        }
+
         public void Guard(string phoneNumber, string email, IUserDomainService userDomainService)
         {
             NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));
-           
+
 
             if (phoneNumber.Length != 11)
                 throw new InvalidDomainDataException("شماره موبایل نامعتبر است");
-            
-            if(!string.IsNullOrWhiteSpace(email))
+
+            if (!string.IsNullOrWhiteSpace(email))
                 if (email.IsValidEmail() == false)
-                     throw new InvalidDomainDataException("ایمیل  نامعتبر است");
+                    throw new InvalidDomainDataException("ایمیل  نامعتبر است");
 
             if (phoneNumber != PhoneNumber)
                 if (userDomainService.PhoneNumberIsExist(phoneNumber))

@@ -29,7 +29,7 @@ public class GenerateJwtToke
         {
             Subject = new ClaimsIdentity(claims),
             SigningCredentials = creds,
-            Expires = DateTime.Now.AddDays(2),
+            Expires = DateTime.Now.AddDays(7),
             Issuer = configuration["Jwt:JwtIssuer"],
             Audience = configuration["Jwt:JwtAudience"],
             EncryptingCredentials = encryptorCred,

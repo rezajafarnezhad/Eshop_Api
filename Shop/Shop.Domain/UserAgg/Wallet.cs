@@ -1,4 +1,5 @@
-﻿using Common.Domain;
+﻿using System.Reflection.Metadata.Ecma335;
+using Common.Domain;
 using Common.Domain.Exceptions;
 
 namespace Shop.Domain.UserAgg
@@ -14,8 +15,8 @@ namespace Shop.Domain.UserAgg
             Description = description;
             IsFinally = isFinally;
             Type = type;
-            if(isFinally)
-                FinallyDate=DateTime.Now;
+            if (isFinally)
+                FinallyDate = DateTime.Now;
         }
 
         public long UserId { get; internal set; }

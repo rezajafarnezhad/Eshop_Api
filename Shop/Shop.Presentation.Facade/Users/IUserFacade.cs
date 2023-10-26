@@ -1,4 +1,5 @@
 ﻿using Common.Application;
+using Shop.Application.Users.AddToken;
 using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
 using Shop.Application.Users.Register;
@@ -15,5 +16,6 @@ namespace Shop.Presentation.Facade.Users
         Task<UserDto?> GetUserByPhoneNumber(string phoneNumber);
         Task<UserDto?> GetUserById(long userId);
         Task<UserFilterResult> GetUserByFilter(UserFilterParams filterParams);
+        Task<OperationResult> AddToken(AddTokenCommand command);
     }
 }

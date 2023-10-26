@@ -82,6 +82,21 @@ namespace Shop.Infrastructure.Persistent.Ef.UserAgg
                 option.ToTable("Roles", "user");
                 option.HasIndex(b => b.UserId);
             });
+
+            builder.OwnsMany(b => b.UserTokens, option =>
+            {
+                option.ToTable("Tokens", "user");
+                option.HasKey(b => b.Id);
+                option.HasIndex(b => b.UserId);
+                option.Property(b => b.HashJwtToken)
+                    .IsRequired();
+
+                option.Property(b => b.HashJwtRefreshToken)
+                    .IsRequired();
+
+                option.Property(b => b.Device)
+                    .IsRequired().HasMaxLength(50);
+            });
         }
     }
 }
