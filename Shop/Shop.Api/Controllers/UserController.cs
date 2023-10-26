@@ -49,12 +49,6 @@ public class UserController : BaseApiController
         return CommandResult(result, HttpStatusCode.Created, url);
     }
 
-    [HttpPost("Register")]
-    public async Task<ApiResult> Register(RegisterUserCommand command)
-    {
-        return CommandResult(await _userFacade.RegisterUser(command));
-    }
-
     [HttpPut]
     public async Task<ApiResult> Edit([FromForm] EditUserCommand command)
     {

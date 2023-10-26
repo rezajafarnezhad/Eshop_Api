@@ -1,14 +1,34 @@
 using Common.Application;
 using Common.Application.FileUtil.Interfaces;
 using Common.Application.FileUtil.Services;
+using Common.AspNet;
 using Common.AspNet.Middlewares;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Shop.Api.Infrastructure.jwt;
 using Shop.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(option =>
+    {
+        option.InvalidModelStateResponseFactory = (context =>
+        {
+            var result = new ApiResult()
+            {
+                IsSuccess = false,
+                MetaData = new()
+                {
+                    StatusCode = AppStatusCode.BadRequest,
+                    Message = context.ModelState.GetModelStateError()
+                }
+            };
+            return new BadRequestObjectResult(result);
+        });
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -18,6 +38,8 @@ builder.Services.RegisterShopDependency(connectionString);
 CommonBootstrapper.Init(builder.Services);
 builder.Services.AddTransient<IFileService, FileService>();
 
+//Jwt
+builder.Services.AddJwtConfig(builder.Configuration);
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -27,6 +49,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.UseApiCustomExceptionHandler();
