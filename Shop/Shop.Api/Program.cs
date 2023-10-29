@@ -4,7 +4,7 @@ using Common.Application.FileUtil.Services;
 using Common.AspNet;
 using Common.AspNet.Middlewares;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using Shop.Api.Infrastructure;
 using Shop.Api.Infrastructure.jwt;
 using Shop.Config;
 
@@ -36,6 +36,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.RegisterShopDependency(connectionString);
 CommonBootstrapper.Init(builder.Services);
+builder.Services.RegisterApiDependency();
 builder.Services.AddTransient<IFileService, FileService>();
 
 //Jwt

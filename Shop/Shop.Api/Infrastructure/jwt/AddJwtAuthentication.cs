@@ -27,6 +27,15 @@ public static class AddJwtAuthentication
                 TokenDecryptionKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["Jwt:secKey"]))
             };
             option.SaveToken = true;
+            option.Events = new JwtBearerEvents()
+            {
+                OnTokenValidated = async context =>
+                {
+                    var customValidate = context.HttpContext.RequestServices.GetRequiredService<CustomJwtValid>();
+                    await customValidate.Validate(context);
+                }
+            };
+
         });
 
 

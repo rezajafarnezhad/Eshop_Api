@@ -3,6 +3,8 @@ using Common.Application;
 using Common.Application.SecurityUtil;
 using Common.AspNet;
 using Common.Domain.ValueObjects;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.jwt;
 using Shop.Api.ViewModels.Auth;
@@ -12,6 +14,7 @@ using Shop.Application.Users.RemoveToken;
 using Shop.Presentation.Facade.Users;
 using Shop.Presentation.Facade.Users.UserToken;
 using Shop.Query.Users.DTOs;
+using Shop.Query.Users.UserTokens.GetTokenByToken;
 using UAParser;
 
 namespace Shop.Api.Controllers;
@@ -105,7 +108,7 @@ public class AuthController : BaseApiController
                 register.Password)));
     }
 
-    [HttpPost("RefreshToken")]
+    [HttpPost("/RefreshToken")]
     public async Task<ApiResult<LoginResultDto>> RefreshToken(string refreshToken)
     {
         var token = await _userTokenFacade.GetUserTokenByRefreshToken(refreshToken);
@@ -124,4 +127,19 @@ public class AuthController : BaseApiController
         var loginResult =await AddTokenAndGenerateJWt(user);
         return CommandResult(loginResult);
     }
+
+    [HttpPost("/Logout")]
+    [Authorize]
+    public async Task<ApiResult> Logout()
+    {
+        var jwtToken =await HttpContext.GetTokenAsync("access_token");
+        var result = await _userTokenFacade.GetUserTokenByJwtToken(jwtToken);
+        if (result is null)
+        { return CommandResult(OperationResult.NotFound()); }
+
+        await _userTokenFacade.RemoveToken(new RemoveTokenCommand(result.UserId,result.Id));
+        return CommandResult(OperationResult.Success());
+    }
+
+    
 }
