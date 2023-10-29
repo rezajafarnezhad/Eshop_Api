@@ -122,6 +122,16 @@ namespace Shop.Domain.UserAgg
             UserTokens.Add(token);
         }
 
+        public void RemoveToken(long tokenId)
+        {
+            var token = UserTokens.FirstOrDefault(c => c.Id == tokenId);
+
+            if (token == null)
+            { throw new InvalidDomainDataException("Token not Found"); }
+
+            UserTokens.Remove(token);
+        }
+
         public void Guard(string phoneNumber, string email, IUserDomainService userDomainService)
         {
             NullOrEmptyDomainDataException.CheckString(phoneNumber, nameof(phoneNumber));

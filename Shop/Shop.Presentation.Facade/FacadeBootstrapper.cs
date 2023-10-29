@@ -10,6 +10,7 @@ using Shop.Presentation.Facade.SiteEntities.Banner;
 using Shop.Presentation.Facade.SiteEntities.Slider;
 using Shop.Presentation.Facade.Users;
 using Shop.Presentation.Facade.Users.Addresses;
+using Shop.Presentation.Facade.Users.UserToken;
 
 namespace Shop.Presentation.Facade;
 
@@ -29,6 +30,7 @@ public static class FacadeBootstrapper
 
         services.AddScoped<IUserFacade, UserFacade>();
         services.AddScoped<IUserAddressFacade, UserAddressFacade>();
+        services.AddScoped<IUserTokenFacade, UserTokenFacade>();
 
     }
 }

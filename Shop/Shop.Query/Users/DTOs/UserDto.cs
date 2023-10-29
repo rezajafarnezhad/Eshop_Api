@@ -15,7 +15,7 @@ public class UserDto:BaseDto
     public string AvatarName { get; set; }
     public bool IsAcive { get; set; }
     public Gender Gender { get; set; }
-    public List<UserRoleDto> Roles { get; set; }
+    public List<UserRoleDto?> Roles { get; set; }
 }
 public class UserRoleDto
 {

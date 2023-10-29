@@ -8,7 +8,9 @@ using Shop.Api.Infrastructure.jwt;
 using Shop.Api.ViewModels.Auth;
 using Shop.Application.Users.AddToken;
 using Shop.Application.Users.Register;
+using Shop.Application.Users.RemoveToken;
 using Shop.Presentation.Facade.Users;
+using Shop.Presentation.Facade.Users.UserToken;
 using Shop.Query.Users.DTOs;
 using UAParser;
 
@@ -17,11 +19,13 @@ namespace Shop.Api.Controllers;
 public class AuthController : BaseApiController
 {
     private readonly IUserFacade _userFacade;
+    private readonly IUserTokenFacade _userTokenFacade;
     private readonly IConfiguration _configuration;
-    public AuthController(IUserFacade userFacade, IConfiguration configuration)
+    public AuthController(IUserFacade userFacade, IConfiguration configuration, IUserTokenFacade userTokenFacade)
     {
         _userFacade = userFacade;
         _configuration = configuration;
+        _userTokenFacade = userTokenFacade;
     }
 
     [HttpPost("/Login")]
@@ -101,4 +105,23 @@ public class AuthController : BaseApiController
                 register.Password)));
     }
 
+    [HttpPost("RefreshToken")]
+    public async Task<ApiResult<LoginResultDto>> RefreshToken(string refreshToken)
+    {
+        var token = await _userTokenFacade.GetUserTokenByRefreshToken(refreshToken);
+        
+        if (token == null) 
+        { return CommandResult(OperationResult<LoginResultDto>.NotFound()); }
+
+        if (token.ExpireDateToken > DateTime.Now) 
+        { return CommandResult(OperationResult<LoginResultDto>.Error("توکن هنوز اعتبار دارد"));}
+
+        if (token.ExpireDateRefreshToken < DateTime.Now)
+        { return CommandResult(OperationResult<LoginResultDto>.Error("زمان رفرش توکن به پایان رسیده")); }
+
+        await _userTokenFacade.RemoveToken(new RemoveTokenCommand(token.UserId, token.Id));
+        var user = await _userFacade.GetUserById(token.UserId);
+        var loginResult =await AddTokenAndGenerateJWt(user);
+        return CommandResult(loginResult);
+    }
 }
