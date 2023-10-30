@@ -1,15 +1,17 @@
 ﻿using System.Net;
 using Common.Application;
 using Common.AspNet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.Infrastructure.AuthorizeAttr;
 using Shop.Application.Comments.ChangeStatus;
 using Shop.Application.Comments.Create;
 using Shop.Application.Comments.Edit;
+using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.Comments;
 using Shop.Query.Comments.DTOs;
 
 namespace Shop.Api.Controllers;
-
 
 public class CommentController : BaseApiController
 {
@@ -20,6 +22,8 @@ public class CommentController : BaseApiController
     }
 
     [HttpGet]
+    [PermissionChecker(Permission.CommentManagement)]
+
     public async Task<ApiResult<CommentFilterResult>> GetByFilter([FromQuery] CommentFilterParams filterParams)
     {
         var result = await _commentFacade.GetCommentsByFilter(filterParams);
@@ -27,6 +31,7 @@ public class CommentController : BaseApiController
     }
 
     [HttpGet("{id}")]
+    [PermissionChecker(Permission.CommentManagement)]
     public async Task<ApiResult<CommentDto>> GetById(long id)
     {
         var result = await _commentFacade.GetCommentById(id);
@@ -34,6 +39,7 @@ public class CommentController : BaseApiController
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ApiResult<long>> Create(CreateCommentCommand command)
     {
         var result = await _commentFacade.CreateComment(command);
@@ -42,6 +48,7 @@ public class CommentController : BaseApiController
     }
 
     [HttpPut]
+    [Authorize]
     public async Task<ApiResult> Edit(EditCommentCommand command)
     {
         var result = await _commentFacade.EditComment(command);
@@ -49,6 +56,7 @@ public class CommentController : BaseApiController
     }
 
     [HttpPut("ChangeStatus")]
+    [PermissionChecker(Permission.CommentManagement)]
     public async Task<ApiResult> ChangeStatus(ChangeCommentStatusCommand command)
     {
         var result = await _commentFacade.ChangeStatus(command);

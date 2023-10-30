@@ -1,21 +1,17 @@
 ﻿using System.Net;
-using AutoMapper;
 using Common.AspNet;
 using Microsoft.AspNetCore.Mvc;
-using Shop.Api.ViewModels.User;
-using Shop.Application.Users.AddAddress;
-using Shop.Application.Users.ChargeWallet;
+using Shop.Api.Infrastructure.AuthorizeAttr;
 using Shop.Application.Users.Create;
-using Shop.Application.Users.DeleteAddress;
 using Shop.Application.Users.Edit;
-using Shop.Application.Users.EditAddress;
-using Shop.Application.Users.Register;
+using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.Users;
-using Shop.Presentation.Facade.Users.Addresses;
 using Shop.Query.Users.DTOs;
 
 namespace Shop.Api.Controllers;
 
+
+[PermissionChecker(Permission.UserManagement)]
 public class UserController : BaseApiController
 {
     private readonly IUserFacade _userFacade;

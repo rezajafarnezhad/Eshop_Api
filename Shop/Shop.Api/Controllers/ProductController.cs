@@ -1,16 +1,20 @@
 ﻿using System.Net;
 using Common.AspNet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.Infrastructure.AuthorizeAttr;
 using Shop.Application.Comments.Edit;
 using Shop.Application.Products.AddImage;
 using Shop.Application.Products.Create;
 using Shop.Application.Products.Edit;
 using Shop.Application.Products.RemoveImage;
+using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.Products;
 using Shop.Query.Products.DTOs;
 
 namespace Shop.Api.Controllers;
 
+[PermissionChecker(Permission.ProductManagement)]
 public class ProductController : BaseApiController
 {
     private readonly IProductFacade _productFacade;
@@ -21,6 +25,7 @@ public class ProductController : BaseApiController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ApiResult<ProductFilterResult>> GetByFilter([FromQuery]ProductFilterParams filterParams)
     {
         var result = await _productFacade.GetProductsByFilter(filterParams);
@@ -35,6 +40,7 @@ public class ProductController : BaseApiController
     }
 
     [HttpGet("GetBySlug")]
+    [AllowAnonymous]
     public async Task<ApiResult<ProductDto>> GetBySlug(string slug)
     {
         var result = await _productFacade.GetProductBySlug(slug);

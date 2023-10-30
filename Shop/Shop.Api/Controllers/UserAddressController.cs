@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Common.AspNet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.ViewModels.User;
 using Shop.Application.Users.AddAddress;
@@ -10,6 +11,7 @@ using Shop.Query.Users.Address;
 
 namespace Shop.Api.Controllers;
 
+[Authorize]
 public class UserAddressController : BaseApiController
 {
     private readonly IUserAddressFacade _userAddressFacade;
