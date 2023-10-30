@@ -12,4 +12,5 @@ public interface ISellerFacade
 
     Task<SellerDto?> GetSellerById(long sellerId);
     Task<SellerFilterResult> GetSellersByFilter(SellerFilterParams filterParams);
+    Task<SellerDto> GetSellersByUserId(long userId);
 }

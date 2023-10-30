@@ -24,7 +24,6 @@
     <Folder Include="Roles\DTOs\" />
     <Folder Include="Sellers\GetById\" />
     <Folder Include="Sellers\GetByFilter\" />
-    <Folder Include="Sellers\DTOs\" />
     <Folder Include="SiteEntities\Banners\GetById\" />
     <Folder Include="SiteEntities\Banners\GetList\" />
     <Folder Include="SiteEntities\DTOs\" />

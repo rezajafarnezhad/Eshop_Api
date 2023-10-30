@@ -1,4 +1,6 @@
-﻿using Common.Query;
+﻿using System.Reflection.Metadata.Ecma335;
+using Common.Domain;
+using Common.Query;
 using Common.Query.Filter;
 using Shop.Domain.SellerAgg;
 

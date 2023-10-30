@@ -37,6 +37,13 @@ public class SellerController : BaseApiController
     {
         return QueryResult(await _sellerFacade.GetSellerById(id));
     }
+    [HttpGet("Current")]
+    [Authorize]
+    public async Task<ApiResult<SellerDto>> GetByUserId()
+    {
+        var userId = User.GetUserId();
+        return QueryResult(await _sellerFacade.GetSellersByUserId(userId));
+    }
 
     [HttpPost]
     [PermissionChecker(Permission.SellerManagement)]
@@ -68,5 +75,32 @@ public class SellerController : BaseApiController
     {
         var result = await _sellerInventoryFacade.EditInventory(command);
         return CommandResult(result);
+    }
+
+    [HttpGet("Inventories")]
+    [PermissionChecker(Permission.EditInventory)]
+    public async Task<ApiResult<List<InventoryDto>>> GetInventories()
+    {
+        var seller =await _sellerFacade.GetSellersByUserId(User.GetUserId());
+        if (seller is null)
+            return QueryResult(new List<InventoryDto>());
+
+        var result = await _sellerInventoryFacade.GetListInventories(seller.Id);
+        return QueryResult(result);
+    }
+
+    [HttpGet("Inventory")]
+    [PermissionChecker(Permission.EditInventory)]
+    public async Task<ApiResult<InventoryDto>> GetInventoryById(long inventoryId)
+    {
+        var seller =await _sellerFacade.GetSellersByUserId(User.GetUserId());
+        if (seller is null)
+            return QueryResult(new InventoryDto());
+
+        var result = await _sellerInventoryFacade.GetInventoryById(inventoryId);
+        if (result is null || result.SellerId != seller.Id)
+            return QueryResult(new InventoryDto());
+
+        return QueryResult(result);
     }
 }
