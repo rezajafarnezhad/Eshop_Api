@@ -75,4 +75,12 @@ public class ProductController : BaseApiController
         var result = await _productFacade.RemoveImage(command);
         return CommandResult(result);
     }
+
+    [HttpGet("ProductShop")]
+    [AllowAnonymous]
+    public async Task<ApiResult<ProductShopResult>> GetProductShop(
+        [FromQuery] ProductShopFilterParams parasFilterParams)
+    {
+        return QueryResult(await _productFacade.GetProductShop(parasFilterParams));
+    }
 }
