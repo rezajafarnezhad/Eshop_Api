@@ -31,7 +31,7 @@ public class AuthController : BaseApiController
         _userTokenFacade = userTokenFacade;
     }
 
-    [HttpPost("/Login")]
+    [HttpPost("Login")]
     public async Task<ApiResult<LoginResultDto>> Login(LoginViewModel login)
     {
 
@@ -100,7 +100,7 @@ public class AuthController : BaseApiController
         });
     }
 
-    [HttpPost("/Register")]
+    [HttpPost("Register")]
     public async Task<ApiResult> Register(RegisterViewModel register)
     {
         return CommandResult(await _userFacade.RegisterUser(
@@ -108,7 +108,7 @@ public class AuthController : BaseApiController
                 register.Password)));
     }
 
-    [HttpPost("/RefreshToken")]
+    [HttpPost("RefreshToken")]
     public async Task<ApiResult<LoginResultDto>> RefreshToken(string refreshToken)
     {
         var token = await _userTokenFacade.GetUserTokenByRefreshToken(refreshToken);
@@ -128,7 +128,7 @@ public class AuthController : BaseApiController
         return CommandResult(loginResult);
     }
 
-    [HttpPost("/Logout")]
+    [HttpPost("Logout")]
     [Authorize]
     public async Task<ApiResult> Logout()
     {
