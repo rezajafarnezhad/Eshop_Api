@@ -52,7 +52,7 @@ public class UserAddressController : BaseApiController
     }
 
     [HttpDelete]
-    public async Task<ApiResult> DeleteAddress(long addressId)
+    public async Task<ApiResult> DeleteAddress([FromQuery]long addressId)
     {
         var userId = User.GetUserId();
         return CommandResult(await _userAddressFacade.DeleteAddress(new DeleteUserAddressCommand(userId, addressId)));

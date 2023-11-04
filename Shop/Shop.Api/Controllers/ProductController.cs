@@ -39,7 +39,7 @@ public class ProductController : BaseApiController
         return QueryResult(result);
     }
 
-    [HttpGet("GetBySlug")]
+    [HttpGet("GetBySlug/{slug}")]
     [AllowAnonymous]
     public async Task<ApiResult<ProductDto>> GetBySlug(string slug)
     {
@@ -69,10 +69,10 @@ public class ProductController : BaseApiController
         return CommandResult(result);
     }
 
-    [HttpDelete]
-    public async Task<ApiResult> RemoveImage(RemoveProductImageCommand command)
+    [HttpDelete("RemoveImage/{productId}/{imageId}")]
+    public async Task<ApiResult> RemoveImage(long productId, long imageId)
     {
-        var result = await _productFacade.RemoveImage(command);
+        var result = await _productFacade.RemoveImage(new RemoveProductImageCommand(productId,imageId));
         return CommandResult(result);
     }
 
