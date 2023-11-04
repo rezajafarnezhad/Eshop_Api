@@ -7,7 +7,7 @@
 
         public BaseEntity()
         {
-            CreationDate = new DateTime();
+            CreationDate = DateTime.Now;
         }
     }
 }

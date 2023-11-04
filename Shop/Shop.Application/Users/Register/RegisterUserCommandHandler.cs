@@ -20,7 +20,7 @@ internal class RegisterUserCommandHandler : IBaseCommandHandler<RegisterUserComm
     public async Task<OperationResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
         var user = User.RegisterUser(request.PhoneNumber.Value, Sha256Hasher.Hash(request.Password), _domainService);
-
+        
         _repository.Add(user);
         await _repository.Save();
         return OperationResult.Success();

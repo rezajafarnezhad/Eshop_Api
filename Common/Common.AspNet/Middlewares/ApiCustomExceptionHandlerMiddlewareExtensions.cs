@@ -71,20 +71,20 @@ public class ApiCustomExceptionHandlerMiddleware
         void SetErrorMessage(Exception exception)
         {
             message = exception.Message;
-            if (_env.IsDevelopment())
-            {
-                var dic = new Dictionary<string, string>
-                {
-                    ["Exception"] = exception.Message,
-                    ["StackTrace"] = exception.StackTrace,
-                };
-                if (exception.InnerException != null)
-                {
-                    dic.Add("InnerException.Exception", exception.InnerException.Message);
-                    dic.Add("InnerException.StackTrace", exception.InnerException.StackTrace);
-                }
-                message = JsonConvert.SerializeObject(dic);
-            }
+            //if (_env.IsDevelopment())
+            //{
+            //    var dic = new Dictionary<string, string>
+            //    {
+            //        ["Exception"] = exception.Message,
+            //        ["StackTrace"] = exception.StackTrace,
+            //    };
+            //    if (exception.InnerException != null)
+            //    {
+            //        dic.Add("InnerException.Exception", exception.InnerException.Message);
+            //        dic.Add("InnerException.StackTrace", exception.InnerException.StackTrace);
+            //    }
+            //    message = JsonConvert.SerializeObject(dic);
+            //}
         }
         async Task WriteToResponseAsync()
         {
