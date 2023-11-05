@@ -5,6 +5,7 @@ using Shop.Domain.UserAgg.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -62,6 +63,11 @@ namespace Shop.Domain.UserAgg
         public static User RegisterUser(string phoneNumber, string password, IUserDomainService userDomainService)
         {
             return new User("", "", phoneNumber, null, password, Gender.None, userDomainService);
+        }
+
+        public void ChangePassword(string pass)
+        {
+            Password = pass;
         }
 
         public void SetAvatar(string imageName)

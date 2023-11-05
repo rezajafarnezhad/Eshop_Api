@@ -23,6 +23,6 @@ internal class RegisterUserCommandHandler : IBaseCommandHandler<RegisterUserComm
         
         _repository.Add(user);
         await _repository.Save();
-        return OperationResult.Success();
+        return OperationResult.Success("کاربر گرامی به همتا شاپ خوش آمدید!");
     }
 }

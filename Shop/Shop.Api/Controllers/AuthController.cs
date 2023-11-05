@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.jwt;
 using Shop.Api.ViewModels.Auth;
 using Shop.Application.Users.AddToken;
+using Shop.Application.Users.ChangePassword;
 using Shop.Application.Users.Register;
 using Shop.Application.Users.RemoveToken;
 using Shop.Presentation.Facade.Users;
@@ -140,6 +141,8 @@ public class AuthController : BaseApiController
         await _userTokenFacade.RemoveToken(new RemoveTokenCommand(result.UserId,result.Id));
         return CommandResult(OperationResult.Success());
     }
+
+  
 
     
 }

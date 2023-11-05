@@ -26,8 +26,7 @@ public class BaseApiController : ControllerBase
     }
 
 
-    protected ApiResult<TData> CommandResult<TData>(OperationResult<TData> result
-        ,HttpStatusCode statusCode=HttpStatusCode.OK , string url=null)
+    protected ApiResult<TData> CommandResult<TData>(OperationResult<TData> result,HttpStatusCode statusCode=HttpStatusCode.OK , string url=null)
     {
         bool isSuccess = result.Status == OperationResultStatus.Success;
         if (isSuccess)

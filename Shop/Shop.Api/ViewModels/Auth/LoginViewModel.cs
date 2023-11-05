@@ -12,11 +12,3 @@ public class LoginViewModel
     [Required(ErrorMessage = "کلمه عبور وارد شود")]
     public string Password { get; set; }
 }
-
-
-public class LoginResultDto
-{
-    public string Token { get; set; }
-    public string RefreshToken { get; set; }
-
-}
