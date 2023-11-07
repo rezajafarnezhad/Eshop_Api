@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Shop.Domain.UserAgg.Events;
 
 namespace Shop.Domain.UserAgg
 {
@@ -62,7 +63,9 @@ namespace Shop.Domain.UserAgg
 
         public static User RegisterUser(string phoneNumber, string password, IUserDomainService userDomainService)
         {
-            return new User("", "", phoneNumber, null, password, Gender.None, userDomainService);
+            var user = new User("", "", phoneNumber, null, password, Gender.None, userDomainService);
+            user.AddDomainEvent(new UserRegistered(user.Id,phoneNumber));
+            return user;
         }
 
         public void ChangePassword(string pass)

@@ -29,6 +29,7 @@ public static class AddJwtAuthentication
             option.SaveToken = true;
             option.Events = new JwtBearerEvents()
             {
+                //When User is Login  
                 OnTokenValidated = async context =>
                 {
                     var customValidate = context.HttpContext.RequestServices.GetRequiredService<CustomJwtValid>();

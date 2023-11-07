@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Shop.Domain.OrderAgg.Events;
 
 namespace Shop.Domain.OrderAgg
 {
@@ -119,6 +120,14 @@ namespace Shop.Domain.OrderAgg
         {
             if (Status != OrderStatus.Pending)
                 throw new InvalidDomainDataException("امکان ویرایش این سفارش وجود ندارد");
+        }
+
+
+        public void Finally()
+        {
+            Status = OrderStatus.Finally;
+            LastUpdate = DateTime.Now;
+            AddDomainEvent(new OrderFinalized(Id,UserId));
         }
     }
 }

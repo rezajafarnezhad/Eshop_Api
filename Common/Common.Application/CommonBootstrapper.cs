@@ -1,4 +1,5 @@
-﻿using Common.Application.Validation;
+﻿using Common.Application.EmailUtil.EmailService;
+using Common.Application.Validation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,6 +10,7 @@ namespace Common.Application
         public static void Init(IServiceCollection service)
         {
             service.AddTransient(typeof(IPipelineBehavior<,>), typeof(CommandValidationBehavior<,>));
+            service.AddScoped<IEmailService, EmailService>();
         }
     }
 }
