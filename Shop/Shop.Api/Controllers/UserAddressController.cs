@@ -6,6 +6,7 @@ using Shop.Api.ViewModels.User;
 using Shop.Application.Users.AddAddress;
 using Shop.Application.Users.DeleteAddress;
 using Shop.Application.Users.EditAddress;
+using Shop.Application.Users.SetAddressActive;
 using Shop.Presentation.Facade.Users.Addresses;
 using Shop.Query.Users.Address;
 
@@ -49,6 +50,12 @@ public class UserAddressController : BaseApiController
         var mapCommand = _mapper.Map<EditUserAddressCommand>(command);
         mapCommand.UserId = User.GetUserId();
         return CommandResult(await _userAddressFacade.EditAddress(mapCommand));
+    }
+    
+    [HttpPut("ActivationAddress")]
+    public async Task<ApiResult> ActivationAddress([FromQuery]long addressId)
+    {
+        return CommandResult(await _userAddressFacade.ActiveAddress(new SetAddressActiveCommand(User.GetUserId(),addressId)));
     }
 
     [HttpDelete]

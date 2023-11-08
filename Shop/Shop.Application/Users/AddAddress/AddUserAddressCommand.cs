@@ -5,6 +5,10 @@ namespace Shop.Application.Users.AddAddress;
 
 public class AddUserAddressCommand:IBaseCommand
 {
+    public AddUserAddressCommand()
+    {
+        
+    }
     public AddUserAddressCommand(long userId, string shire, string city, string postalCode, string postalAddress, PhoneNumber phoneNumber, string name, string family, string nationalCode)
     {
         UserId = userId;

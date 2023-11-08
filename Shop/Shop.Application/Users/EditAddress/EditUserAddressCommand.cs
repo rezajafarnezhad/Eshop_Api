@@ -7,6 +7,10 @@ namespace Shop.Application.Users.EditAddress;
 
 public class EditUserAddressCommand : IBaseCommand
 {
+    public EditUserAddressCommand()
+    {
+        
+    }
     public EditUserAddressCommand(string shire, string city, string postalCode, string postalAddress, PhoneNumber phoneNumber, string name, string family, string nationalCode, long userId)
     {
         Shire = shire;

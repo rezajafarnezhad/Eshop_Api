@@ -17,7 +17,7 @@ public class GetUserByPhoneNumberQueryHandler : IQueryHandler<GetUserByPhoneNumb
     public async Task<UserDto?> Handle(GetUserByPhoneNumberQuery request, CancellationToken cancellationToken)
     {
         var user = await _context.Users
-            .FirstOrDefaultAsync(f => f.PhoneNumber == request.PhoneNumber, cancellationToken);
+            .SingleOrDefaultAsync(f => f.PhoneNumber == request.PhoneNumber, cancellationToken);
 
         if (user == null)
             return null;

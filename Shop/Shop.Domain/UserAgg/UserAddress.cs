@@ -36,7 +36,7 @@ namespace Shop.Domain.UserAgg
         public string Name { get; private set; }
         public string Family { get; private set; }
         public string NationalCode { get; private set; }
-        public bool ActiveAddress { get; private set; }
+        public bool ActiveAddress { get;  set; }
 
         public void Edit(string shire, string city, string postalCode, string postalAddress,
             PhoneNumber phoneNumber, string name, string family, string nationalCode)

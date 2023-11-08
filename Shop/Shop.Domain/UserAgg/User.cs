@@ -64,7 +64,7 @@ namespace Shop.Domain.UserAgg
         public static User RegisterUser(string phoneNumber, string password, IUserDomainService userDomainService)
         {
             var user = new User("", "", phoneNumber, null, password, Gender.None, userDomainService);
-            user.AddDomainEvent(new UserRegistered(user.Id,phoneNumber));
+            user.AddDomainEvent(new UserRegistered(user.Id, phoneNumber));
             return user;
         }
 
@@ -105,6 +105,19 @@ namespace Shop.Domain.UserAgg
             oldAddress.Edit(address.Shire, address.City, address.PostalCode, address.PostalAddress, address.PhoneNumber,
                 address.Name, address.Family, address.NationalCode);
         }
+
+        public void SetAddressActive(long addressId)
+        {
+            Addresses.ForEach(c =>
+            {
+                c.ActiveAddress = false;
+            });
+            var address = Addresses.FirstOrDefault(a => a.Id == addressId);
+            if (address == null)
+                throw new NullOrEmptyDomainDataException("Address Not found");
+            address.SetActive();
+        }
+
 
         public void ChargeWallet(Wallet wallet)
         {

@@ -2,6 +2,7 @@
 using Shop.Application.Users.AddAddress;
 using Shop.Application.Users.DeleteAddress;
 using Shop.Application.Users.EditAddress;
+using Shop.Application.Users.SetAddressActive;
 using Shop.Query.Users.Address;
 
 namespace Shop.Presentation.Facade.Users.Addresses
@@ -14,5 +15,6 @@ namespace Shop.Presentation.Facade.Users.Addresses
         Task<OperationResult> DeleteAddress(DeleteUserAddressCommand command);
         Task<AddressDto> GetById(long addressId);
         Task<List<AddressDto>> GetList(long userId);
+        Task<OperationResult> ActiveAddress(SetAddressActiveCommand command);
     }
 }
