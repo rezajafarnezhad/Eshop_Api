@@ -1,4 +1,5 @@
-﻿using Common.Application.EmailUtil.EmailService;
+﻿using Common.Application.EmailUtil;
+using Common.Application.EmailUtil.EmailService;
 using MediatR;
 using Shop.Domain.UserAgg.Events;
 
@@ -14,17 +15,7 @@ public class RegisteredUserEventHandler : INotificationHandler<UserRegistered>
 
     public async Task Handle(UserRegistered notification, CancellationToken cancellationToken)
     {
-        string body = @$"
-<!DOCTYPE html>
-<html>
-<head>
-<title>د</title>
-</head>
-<body>
-<h1>کاربر {notification.PhoneNumber} به فروشگاه خوش آمدید</h1>
-</body>
-</html>
-";
+        string body = "";
         await _emailService.Send("p", body, "خوش آمدید");
         await Task.CompletedTask;
     }

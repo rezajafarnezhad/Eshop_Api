@@ -25,5 +25,6 @@ namespace Common.Domain.Repository
         bool Exists(Expression<Func<T, bool>> expression);
 
         T? Get(long id);
+        void Delete(long id);
     }
 }

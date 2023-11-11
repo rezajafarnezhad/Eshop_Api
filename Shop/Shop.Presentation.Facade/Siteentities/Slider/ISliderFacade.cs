@@ -12,4 +12,5 @@ public interface ISliderFacade
 
     Task<SliderDto?> GetSliderById(long id);
     Task<List<SliderDto>> GetSliders();
+    Task<OperationResult> DeleteSlider(long id);
 }

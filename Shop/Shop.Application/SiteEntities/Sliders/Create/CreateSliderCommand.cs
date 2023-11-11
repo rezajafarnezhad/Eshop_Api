@@ -5,6 +5,10 @@ namespace Shop.Application.SiteEntities.Sliders.Create;
 
 public class CreateSliderCommand : IBaseCommand<long>
 {
+    public CreateSliderCommand()
+    {
+        
+    }
     public CreateSliderCommand(string link, IFormFile imageFile, string title)
     {
         Link = link;

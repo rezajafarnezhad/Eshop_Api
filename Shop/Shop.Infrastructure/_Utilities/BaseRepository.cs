@@ -58,4 +58,9 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
     {
         return Context.Set<TEntity>().FirstOrDefault(t => t.Id.Equals(id)); ;
     }
+    public void Delete(long id)
+    {
+        var entity= Context.Set<TEntity>().FirstOrDefault(t => t.Id.Equals(id)); ;
+        Context.Set<TEntity>().Remove(entity);
+    }
 }
