@@ -11,7 +11,6 @@ internal class EditSellerInventoryCommandHandler : IBaseCommandHandler<EditSelle
     {
         _repository = repository;
     }
-
     public async Task<OperationResult> Handle(EditSellerInventoryCommand request, CancellationToken cancellationToken)
     {
         var seller = await _repository.GetTracking(request.SellerId);

@@ -15,27 +15,20 @@ using Shop.Infrastructure;
 using Shop.Presentation.Facade;
 using Shop.Query.Categories.GetById;
 
-namespace Shop.Config
+namespace Shop.Config;
+
+public static class ShopBootstrapper
 {
-    public static class ShopBootstrapper
+    public static void RegisterShopDependency(this IServiceCollection services,string connectionString)
     {
-        public static void RegisterShopDependency(this IServiceCollection services,string connectionString)
-        {
-            InfrastructureBootstrapper.Init(services,connectionString);
-
-            services.AddMediatR(typeof(Directories).Assembly);
-
-            services.AddMediatR(typeof(GetCategoryByIdQuery).Assembly);
-
-            services.AddTransient<IProductDomainService, ProductDomainService>();
-            services.AddTransient<IUserDomainService, UserDomainService>();
-            services.AddTransient<ICategoryDomainService, CategoryDomainService>();
-            services.AddTransient<ISellerDomainService, SellerDomainService>();
-
-
-            services.AddValidatorsFromAssembly(typeof(CreateRoleCommandValidator).Assembly);
-
-            services.InitFacadeDependency();
-        }
+        InfrastructureBootstrapper.Init(services,connectionString);
+        services.AddMediatR(typeof(Directories).Assembly);
+        services.AddMediatR(typeof(GetCategoryByIdQuery).Assembly);
+        services.AddTransient<IProductDomainService, ProductDomainService>();
+        services.AddTransient<IUserDomainService, UserDomainService>();
+        services.AddTransient<ICategoryDomainService, CategoryDomainService>();
+        services.AddTransient<ISellerDomainService, SellerDomainService>();
+        services.AddValidatorsFromAssembly(typeof(CreateRoleCommandValidator).Assembly);
+        services.InitFacadeDependency();
     }
 }

@@ -5,8 +5,8 @@ using MediatR;
 
 namespace Common.Application.Validation;
 
-public class CommandValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+public class CommandValidationBehavior<TRequest, TResponse> :
+    IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 

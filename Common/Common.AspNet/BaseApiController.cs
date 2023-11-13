@@ -1,7 +1,6 @@
 ﻿
 
 using System.Net;
-using System.Runtime.InteropServices;
 using Common.Application;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;

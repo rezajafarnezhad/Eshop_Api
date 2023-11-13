@@ -37,9 +37,11 @@ namespace Shop.Infrastructure
 
 
             services.AddTransient(_ => new DapperContext(connectionString));
-            services.AddDbContext<ShopContext>(option =>
+           
+
+            services.AddDbContextPool<ShopContext>(options =>
             {
-                option.UseSqlServer(connectionString);
+                options.UseSqlServer(connectionString);
             });
         }
     }

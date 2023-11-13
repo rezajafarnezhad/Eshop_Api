@@ -13,7 +13,6 @@ public interface ICategoryFacade
     Task<OperationResult<long>> Create(CreateCategoryCommand command);
     Task<OperationResult> Remove(long categoryId);
 
-
     Task<CategoryDto> GetCategoryById(long id);
     Task<List<ChildCategoryDto>> GetCategoriesByParentId(long parentId);
     Task<List<CategoryDto>> GetCategories();

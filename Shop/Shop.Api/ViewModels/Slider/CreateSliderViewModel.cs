@@ -15,3 +15,4 @@ public class EditSliderViewModel
     public IFormFile ImageFile { get; set; }
     public string Title { get; set; }
 }
+

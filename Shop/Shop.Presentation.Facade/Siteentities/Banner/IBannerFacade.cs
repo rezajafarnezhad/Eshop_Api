@@ -12,4 +12,5 @@ public interface IBannerFacade
 
     Task<BannerDto?> GetBannerById(long id);
     Task<List<BannerDto>> GetBanners();
+    Task<OperationResult> DeleteBanner(long bannerId);
 }

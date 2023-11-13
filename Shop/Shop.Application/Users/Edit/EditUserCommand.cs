@@ -1,5 +1,4 @@
 ﻿using Common.Application;
-using Common.Application.Validation;
 using Microsoft.AspNetCore.Http;
 using Shop.Domain.UserAgg.Enums;
 

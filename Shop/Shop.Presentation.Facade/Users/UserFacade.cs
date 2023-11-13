@@ -11,7 +11,6 @@ using Shop.Query.Users.GetById;
 using Shop.Query.Users.GetByPhoneNumber;
 
 namespace Shop.Presentation.Facade.Users;
-
 internal class UserFacade : IUserFacade
 {
     private readonly IMediator _mediator;
@@ -19,8 +18,6 @@ internal class UserFacade : IUserFacade
     {
         _mediator = mediator;
     }
-
-
     public async Task<OperationResult<long>> CreateUser(CreateUserCommand command)
     {
         return await _mediator.Send(command);
@@ -45,7 +42,6 @@ internal class UserFacade : IUserFacade
     {
         return await _mediator.Send(new GetUserByFilterQuery(filterParams));
     }
-
     public async Task<UserDto?> GetUserByPhoneNumber(string phoneNumber)
     {
         return await _mediator.Send(new GetUserByPhoneNumberQuery(phoneNumber));

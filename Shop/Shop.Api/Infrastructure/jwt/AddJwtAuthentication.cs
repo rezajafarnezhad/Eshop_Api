@@ -36,9 +36,6 @@ public static class AddJwtAuthentication
                     await customValidate.Validate(context);
                 }
             };
-
         });
-
-
     }
 }

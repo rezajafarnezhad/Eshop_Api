@@ -1,4 +1,4 @@
-﻿using Common.Application.EmailUtil;
+﻿
 using Common.Application.EmailUtil.EmailService;
 using MediatR;
 using Shop.Domain.UserAgg.Events;
@@ -12,7 +12,6 @@ public class RegisteredUserEventHandler : INotificationHandler<UserRegistered>
     {
         _emailService = emailService;
     }
-
     public async Task Handle(UserRegistered notification, CancellationToken cancellationToken)
     {
         string body = "";

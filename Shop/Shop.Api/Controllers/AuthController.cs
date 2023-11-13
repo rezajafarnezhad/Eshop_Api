@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using Common.Application;
+﻿using Common.Application;
 using Common.Application.SecurityUtil;
 using Common.AspNet;
 using Common.Domain.ValueObjects;
@@ -9,13 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.jwt;
 using Shop.Api.ViewModels.Auth;
 using Shop.Application.Users.AddToken;
-using Shop.Application.Users.ChangePassword;
 using Shop.Application.Users.Register;
 using Shop.Application.Users.RemoveToken;
 using Shop.Presentation.Facade.Users;
 using Shop.Presentation.Facade.Users.UserToken;
 using Shop.Query.Users.DTOs;
-using Shop.Query.Users.UserTokens.GetTokenByToken;
 using UAParser;
 
 namespace Shop.Api.Controllers;

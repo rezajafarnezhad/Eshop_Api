@@ -9,12 +9,8 @@ public class EditUserCommandValidator : AbstractValidator<EditUserCommand>
     {
         RuleFor(r => r.PhoneNumber)
             .ValidPhoneNumber();
-
         RuleFor(r => r.Email)
             .EmailAddress().WithMessage("ایمیل نامعتبر است");
-
-        
-
         RuleFor(f => f.Avatar)
             .JustImageFile();
     }

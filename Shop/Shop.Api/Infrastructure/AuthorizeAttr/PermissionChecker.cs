@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Shop.Domain.RoleAgg;
 using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.Roles;
 using Shop.Presentation.Facade.Users;

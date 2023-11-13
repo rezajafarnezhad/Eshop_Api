@@ -12,24 +12,11 @@ public class ApiResult<TData>
     public MetaData MetaData { get; set; }
     public TData Data { get; set; }
 }
-
-
-
-
-
-
-
-
-
-
-
 public  class MetaData
 {
     public string  Message{ get; set; }
     public AppStatusCode StatusCode  { get; set; }
 }
-
-
 public enum AppStatusCode : byte
 {
     Success = 1,

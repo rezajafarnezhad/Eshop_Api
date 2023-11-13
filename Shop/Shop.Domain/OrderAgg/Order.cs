@@ -15,7 +15,7 @@ namespace Shop.Domain.OrderAgg
         private Order()
         {
         }
-
+            
         public Order(long userId)
         {
             UserId = userId;
