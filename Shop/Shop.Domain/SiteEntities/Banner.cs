@@ -1,10 +1,5 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shop.Domain.SiteEntities
 {
@@ -40,6 +35,9 @@ namespace Shop.Domain.SiteEntities
     public enum BannerPosition
     {
         زیر_اسلایدر,
-        سمت_راست_اسلایر
+        سمت_چپ_اسلایدر,
+        بالای_اسلایدر,
+        سمت_راست_شگفت_انگیز,
+        وسط_صفحه
     }
 }

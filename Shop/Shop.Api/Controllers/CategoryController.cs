@@ -3,6 +3,7 @@ using Common.AspNet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.AuthorizeAttr;
+using Shop.Api.ViewModels.Category;
 using Shop.Application.Categories.AddChild;
 using Shop.Application.Categories.Create;
 using Shop.Application.Categories.Edit;
@@ -44,9 +45,9 @@ public class CategoryController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<ApiResult<long>> CreateCategory(CreateCategoryCommand command)
+    public async Task<ApiResult<long>> CreateCategory(CreateCategoryViewModel command)
     {
-        var result = await _categoryFacade.Create(command);
+        var result = await _categoryFacade.Create(new CreateCategoryCommand(command.Title,command.Slug,command.SeoData));
         var url =Url.Action("GetCategoryById","Category",new{id=result.Data},Request.Scheme);
         return CommandResult(result, HttpStatusCode.Created,url);
     }
