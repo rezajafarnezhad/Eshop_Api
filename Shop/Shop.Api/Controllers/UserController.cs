@@ -58,8 +58,8 @@ public class UserController : BaseApiController
 
     public async Task<ApiResult<long>> Create(CreateUserViewModel userModel)
     {
-        var result = await _userFacade.CreateUser(new CreateUserCommand(userModel.Name,userModel.Family,
-            userModel.PhoneNumber,userModel.Email,userModel.Password,userModel.Gender));
+        var result = await _userFacade.CreateUser(new CreateUserCommand(userModel.Name, userModel.Family,
+            userModel.PhoneNumber, userModel.Email, userModel.Password, userModel.Gender));
         var url = Url.Action("GetById", "User", new { id = result.Data }, Request.Scheme);
         return CommandResult(result, HttpStatusCode.Created, url);
     }
@@ -69,23 +69,24 @@ public class UserController : BaseApiController
     public async Task<ApiResult> Edit([FromForm] EditUserViewModel userModel)
     {
         return CommandResult(await _userFacade.EditUser(new EditUserCommand(userModel.UserId
-            ,userModel.Avatar,userModel.Name,userModel.Family,
-        userModel.PhoneNumber,userModel.Email,userModel.Gender)));
+            , userModel.Avatar, userModel.Name, userModel.Family,
+        userModel.PhoneNumber, userModel.Email, userModel.Gender)));
     }
 
     [HttpPut("CurrentUser")]
     public async Task<ApiResult> EditCurrentUser([FromForm] EditCurrentUserViewModel command)
     {
         var editUserCommand = new EditUserCommand
-            (User.GetUserId(),command.Avatar,command.Name,command.Family,
-                command.PhoneNumber,command.Email,command.Gender);
+            (User.GetUserId(), command.Avatar, command.Name, command.Family,
+                command.PhoneNumber, command.Email, command.Gender);
         return CommandResult(await _userFacade.EditUser(editUserCommand));
     }
     [HttpPut("ChangePassword")]
     public async Task<ApiResult> ChangePassword(ChangePasswordViewModel changePassword)
     {
-        return CommandResult(await _userFacade.ChangePassword
-        (new ChangePasswordCommand(User.GetUserId(),
-            changePassword.Password, changePassword.CurrentPassword)));
+        var changePassCommand =
+            new ChangePasswordCommand(User.GetUserId(), changePassword.Password, changePassword.CurrentPassword);
+       
+        return CommandResult(await _userFacade.ChangePassword(changePassCommand));
     }
 }
