@@ -1,9 +1,9 @@
-﻿using System.Net;
+﻿using AutoMapper;
 using Common.AspNet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.AuthorizeAttr;
-using Shop.Application.Comments.Edit;
+using Shop.Api.ViewModels.Product;
 using Shop.Application.Products.AddImage;
 using Shop.Application.Products.Create;
 using Shop.Application.Products.Edit;
@@ -11,6 +11,7 @@ using Shop.Application.Products.RemoveImage;
 using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.Products;
 using Shop.Query.Products.DTOs;
+using System.Net;
 
 namespace Shop.Api.Controllers;
 
@@ -18,15 +19,16 @@ namespace Shop.Api.Controllers;
 public class ProductController : BaseApiController
 {
     private readonly IProductFacade _productFacade;
-
-    public ProductController(IProductFacade productFacade)
+    private readonly IMapper _mapper;
+    public ProductController(IProductFacade productFacade, IMapper mapper)
     {
         _productFacade = productFacade;
+        _mapper = mapper;
     }
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<ApiResult<ProductFilterResult>> GetByFilter([FromQuery]ProductFilterParams filterParams)
+    public async Task<ApiResult<ProductFilterResult>> GetByFilter([FromQuery] ProductFilterParams filterParams)
     {
         var result = await _productFacade.GetProductsByFilter(filterParams);
         return QueryResult(result);
@@ -48,15 +50,16 @@ public class ProductController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<ApiResult<long>> Create([FromForm]CreateProductCommand command)
+    public async Task<ApiResult<long>> Create([FromForm] ProductViewModel model)
     {
-        var result = await _productFacade.CreateProduct(command);
+        var result = await _productFacade.CreateProduct(new CreateProductCommand(model.Title, model.ImageFile, model.Description,
+            model.CategoryId, model.SubCategoryId, model.SecondarySubCategoryId, model.Slug, model.SeoData.map(), model.Specifications));
         var url = Url.Action("GetById", "Product", new { id = result.Data }, Request.Scheme);
         return CommandResult(result, HttpStatusCode.Created, url);
     }
 
     [HttpPut]
-    public async Task<ApiResult> Edit([FromForm]EditProductCommand command)
+    public async Task<ApiResult> Edit([FromForm] EditProductCommand command)
     {
         var result = await _productFacade.EditProduct(command);
         return CommandResult(result);
@@ -72,7 +75,7 @@ public class ProductController : BaseApiController
     [HttpDelete("RemoveImage/{productId}/{imageId}")]
     public async Task<ApiResult> RemoveImage(long productId, long imageId)
     {
-        var result = await _productFacade.RemoveImage(new RemoveProductImageCommand(productId,imageId));
+        var result = await _productFacade.RemoveImage(new RemoveProductImageCommand(productId, imageId));
         return CommandResult(result);
     }
 
