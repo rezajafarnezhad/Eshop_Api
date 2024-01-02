@@ -15,6 +15,20 @@ namespace Shop.Api.ViewModels.Product
         public Dictionary<string, string> Specifications { get; set; }
     }
 
+    public class EditProductViewModel
+    {
+        public long ProductId { get; set; }
+        public string Title { get; set; }
+        public IFormFile ImageFile { get; set; }
+        public string Description { get; set; }
+        public long CategoryId { get; set; }
+        public long SubCategoryId { get; set; }
+        public long SecondarySubCategoryId { get; set; }
+        public string Slug { get; set; }
+        public SeoDataViewModel SeoData { get; set; }
+        public Dictionary<string, string> Specifications { get; set; }
+    }
+
     public class SeoDataViewModel
     {
         public string MetaTitle { get; set; }

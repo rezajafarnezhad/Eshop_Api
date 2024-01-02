@@ -59,9 +59,10 @@ public class ProductController : BaseApiController
     }
 
     [HttpPut]
-    public async Task<ApiResult> Edit([FromForm] EditProductCommand command)
+    public async Task<ApiResult> Edit([FromForm] EditProductViewModel model)
     {
-        var result = await _productFacade.EditProduct(command);
+        var result = await _productFacade.EditProduct(new EditProductCommand(model.ProductId, model.Title, model.ImageFile, model.Description,
+            model.CategoryId, model.SubCategoryId, model.SecondarySubCategoryId, model.Slug, model.SeoData.map(), model.Specifications));
         return CommandResult(result);
     }
 
