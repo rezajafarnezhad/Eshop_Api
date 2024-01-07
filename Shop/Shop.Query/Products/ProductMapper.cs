@@ -60,7 +60,7 @@ public static class ProductMapper
     }
     public static async Task SetCategories(this ProductDto product, ShopContext context)
     {
-        var categories = await context.Categories
+        var categories = await context.Categories.AsNoTracking()
             .Where(r => r.Id == product.Category.Id || r.Id == product.SubCategory.Id)
             .Select(s => new ProductCategoryDto()
             {
@@ -68,12 +68,12 @@ public static class ProductMapper
                 Slug = s.Slug,
                 ParentId = s.ParentId,
                 SeoData = s.SeoData,
-                Title = s.Title
+                Title = s.Title,
             }).ToListAsync();
 
         if (product.SecondarySubCategory != null)
         {
-            var secondarySubCategory = await context.Categories
+            var secondarySubCategory = await context.Categories.AsNoTracking()
                 .Where(f => f.Id == product.SecondarySubCategory.Id)
                 .Select(s => new ProductCategoryDto()
                 {

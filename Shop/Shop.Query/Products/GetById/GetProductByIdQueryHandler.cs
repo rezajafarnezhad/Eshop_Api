@@ -25,4 +25,7 @@ public class GetProductByIdQueryHandler : IQueryHandler<GetProductByIdQuery, Pro
         await model.SetCategories(_context);
         return model;
     }
+
+
+
 }

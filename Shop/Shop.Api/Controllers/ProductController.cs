@@ -53,7 +53,7 @@ public class ProductController : BaseApiController
     public async Task<ApiResult<long>> Create([FromForm] ProductViewModel model)
     {
         var result = await _productFacade.CreateProduct(new CreateProductCommand(model.Title, model.ImageFile, model.Description,
-            model.CategoryId, model.SubCategoryId, model.SecondarySubCategoryId, model.Slug, model.SeoData.map(), model.Specifications));
+            model.CategoryId, model.SubCategoryId, model.SecondarySubCategoryId, model.Slug, model.SeoData.map(), model.MapSpecifications()));
         var url = Url.Action("GetById", "Product", new { id = result.Data }, Request.Scheme);
         return CommandResult(result, HttpStatusCode.Created, url);
     }
@@ -62,7 +62,7 @@ public class ProductController : BaseApiController
     public async Task<ApiResult> Edit([FromForm] EditProductViewModel model)
     {
         var result = await _productFacade.EditProduct(new EditProductCommand(model.ProductId, model.Title, model.ImageFile, model.Description,
-            model.CategoryId, model.SubCategoryId, model.SecondarySubCategoryId, model.Slug, model.SeoData.map(), model.Specifications));
+            model.CategoryId, model.SubCategoryId, model.SecondarySubCategoryId, model.Slug, model.SeoData.map(), model.MapSpecifications()));
         return CommandResult(result);
     }
 
@@ -87,4 +87,6 @@ public class ProductController : BaseApiController
     {
         return QueryResult(await _productFacade.GetProductShop(parasFilterParams));
     }
+
+
 }

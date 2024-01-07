@@ -1,4 +1,5 @@
 ﻿using Common.Domain.ValueObjects;
+using Newtonsoft.Json;
 
 namespace Shop.Api.ViewModels.Product
 {
@@ -12,7 +13,11 @@ namespace Shop.Api.ViewModels.Product
         public long SecondarySubCategoryId { get; set; }
         public string Slug { get; set; }
         public SeoDataViewModel SeoData { get; set; }
-        public Dictionary<string, string> Specifications { get; set; }
+        public string Specifications { get; set; }
+        public Dictionary<string, string> MapSpecifications()
+        {
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(Specifications);
+        }
     }
 
     public class EditProductViewModel
@@ -26,7 +31,11 @@ namespace Shop.Api.ViewModels.Product
         public long SecondarySubCategoryId { get; set; }
         public string Slug { get; set; }
         public SeoDataViewModel SeoData { get; set; }
-        public Dictionary<string, string> Specifications { get; set; }
+        public string Specifications { get; set; }
+        public Dictionary<string, string> MapSpecifications()
+        {
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(Specifications);
+        }
     }
 
     public class SeoDataViewModel

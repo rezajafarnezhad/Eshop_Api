@@ -51,15 +51,14 @@ public class UserAddressController : BaseApiController
         mapCommand.UserId = User.GetUserId();
         return CommandResult(await _userAddressFacade.EditAddress(mapCommand));
     }
-    
-    [HttpPut("ActivationAddress")]
-    public async Task<ApiResult> ActivationAddress([FromQuery]long addressId)
-    {
-        return CommandResult(await _userAddressFacade.ActiveAddress(new SetAddressActiveCommand(User.GetUserId(),addressId)));
-    }
 
+    [HttpPut("ActivationAddress")]
+    public async Task<ApiResult> ActivationAddress([FromQuery] long addressId)
+    {
+        return CommandResult(await _userAddressFacade.ActiveAddress(new SetAddressActiveCommand(User.GetUserId(), addressId)));
+    }
     [HttpDelete]
-    public async Task<ApiResult> DeleteAddress([FromQuery]long addressId)
+    public async Task<ApiResult> DeleteAddress([FromQuery] long addressId)
     {
         var userId = User.GetUserId();
         return CommandResult(await _userAddressFacade.DeleteAddress(new DeleteUserAddressCommand(userId, addressId)));
