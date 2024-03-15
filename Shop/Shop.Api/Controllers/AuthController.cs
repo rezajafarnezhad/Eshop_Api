@@ -43,7 +43,7 @@ public class AuthController : BaseApiController
         if (!user.IsAcive)
             return CommandResult(OperationResult<LoginResultDto>.Error("حساب کاربری غیر فعال است"));
 
-        var result =await AddTokenAndGenerateJWt(user);
+        var result = await AddTokenAndGenerateJWt(user);
         return CommandResult(result);
     }
 
@@ -61,7 +61,6 @@ public class AuthController : BaseApiController
         }
 
         #endregion
-
 
         #region GeneratToken
 
@@ -110,19 +109,19 @@ public class AuthController : BaseApiController
     public async Task<ApiResult<LoginResultDto>> RefreshToken(string refreshToken)
     {
         var token = await _userTokenFacade.GetUserTokenByRefreshToken(refreshToken);
-        
-        if (token == null) 
+
+        if (token == null)
         { return CommandResult(OperationResult<LoginResultDto>.NotFound()); }
 
-        if (token.ExpireDateToken > DateTime.Now) 
-        { return CommandResult(OperationResult<LoginResultDto>.Error("توکن هنوز اعتبار دارد"));}
+        if (token.ExpireDateToken > DateTime.Now)
+        { return CommandResult(OperationResult<LoginResultDto>.Error("توکن هنوز اعتبار دارد")); }
 
         if (token.ExpireDateRefreshToken < DateTime.Now)
         { return CommandResult(OperationResult<LoginResultDto>.Error("زمان رفرش توکن به پایان رسیده")); }
 
         await _userTokenFacade.RemoveToken(new RemoveTokenCommand(token.UserId, token.Id));
         var user = await _userFacade.GetUserById(token.UserId);
-        var loginResult =await AddTokenAndGenerateJWt(user);
+        var loginResult = await AddTokenAndGenerateJWt(user);
         return CommandResult(loginResult);
     }
 
@@ -130,16 +129,16 @@ public class AuthController : BaseApiController
     [Authorize]
     public async Task<ApiResult> Logout()
     {
-        var jwtToken =await HttpContext.GetTokenAsync("access_token");
+        var jwtToken = await HttpContext.GetTokenAsync("access_token");
         var result = await _userTokenFacade.GetUserTokenByJwtToken(jwtToken);
         if (result is null)
         { return CommandResult(OperationResult.NotFound()); }
 
-        await _userTokenFacade.RemoveToken(new RemoveTokenCommand(result.UserId,result.Id));
+        await _userTokenFacade.RemoveToken(new RemoveTokenCommand(result.UserId, result.Id));
         return CommandResult(OperationResult.Success());
     }
 
-  
 
-    
+
+
 }

@@ -21,7 +21,8 @@ public class GetCurrentOrderByUserIdHandler : IQueryHandler<GetCurrentOrderByUse
     public async Task<OrderDto> Handle(GetCurrentOrderByUserId request, CancellationToken cancellationToken)
     {
         var order = await _shopContext.Orders
-            .FirstOrDefaultAsync(f => f.UserId == request.Userid && f.Status==OrderStatus.Pending, cancellationToken);
+            .FirstOrDefaultAsync(f => f.UserId == request.Userid && f.Status == OrderStatus.Pending, cancellationToken);
+
         if (order == null)
             return null;
 
