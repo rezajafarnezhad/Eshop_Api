@@ -38,6 +38,16 @@ namespace Shop.Api.ViewModels.Product
         }
     }
 
+
+    public class AddProductImageViewModel
+    {
+        public IFormFile ImageFile { get; set; }
+        public long ProductId { get; set; }
+        public int Sequence { get; set; }
+    }
+
+
+
     public class SeoDataViewModel
     {
         public string MetaTitle { get; set; }

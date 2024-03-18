@@ -67,9 +67,9 @@ public class ProductController : BaseApiController
     }
 
     [HttpPost("AddImage")]
-    public async Task<ApiResult> AddImage([FromForm] AddProductImageCommand command)
+    public async Task<ApiResult> AddImage([FromForm] AddProductImageViewModel model)
     {
-        var result = await _productFacade.AddImage(command);
+        var result = await _productFacade.AddImage(new AddProductImageCommand(model.ImageFile, model.ProductId, model.Sequence));
         return CommandResult(result);
     }
 
