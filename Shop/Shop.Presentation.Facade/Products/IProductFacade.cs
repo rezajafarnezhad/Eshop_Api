@@ -18,4 +18,5 @@ public interface IProductFacade
     Task<ProductDto?> GetProductBySlug(string slug);
     Task<ProductFilterResult> GetProductsByFilter(ProductFilterParams filterParams);
     Task<ProductShopResult> GetProductShop(ProductShopFilterParams filterParams);
+    Task<Dictionary<long, string>> GetProductForDropDown();
 }

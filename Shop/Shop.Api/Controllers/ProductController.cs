@@ -88,5 +88,10 @@ public class ProductController : BaseApiController
         return QueryResult(await _productFacade.GetProductShop(parasFilterParams));
     }
 
-
+    [HttpGet("ForDropDown")]
+    [AllowAnonymous]
+    public async Task<ApiResult<Dictionary<long, string>>> GetProductsForDrpDown()
+    {
+        return QueryResult(await _productFacade.GetProductForDropDown());
+    }
 }

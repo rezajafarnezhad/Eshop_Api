@@ -8,6 +8,7 @@ using Shop.Query.Products.DTOs;
 using Shop.Query.Products.GetByFilter;
 using Shop.Query.Products.GetById;
 using Shop.Query.Products.GetBySlug;
+using Shop.Query.Products.GetForDropDown;
 using Shop.Query.Products.GetForShop;
 
 namespace Shop.Presentation.Facade.Products;
@@ -57,6 +58,11 @@ internal class ProductFacade : IProductFacade
     public async Task<ProductShopResult> GetProductShop(ProductShopFilterParams filterParams)
     {
         return await _mediator.Send(new GetProductsForShop(filterParams));
+    }
 
+
+    public async Task<Dictionary<long, string>> GetProductForDropDown()
+    {
+        return await _mediator.Send(new GetForDropDownQuery());
     }
 }

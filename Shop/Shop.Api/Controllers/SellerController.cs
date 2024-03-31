@@ -1,9 +1,8 @@
-﻿using System.Net;
-using Common.AspNet;
+﻿using Common.AspNet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.AuthorizeAttr;
-using Shop.Application.Comments.Edit;
+using Shop.Api.ViewModels.Seller;
 using Shop.Application.Sellers.AddInventory;
 using Shop.Application.Sellers.Create;
 using Shop.Application.Sellers.Edit;
@@ -12,6 +11,7 @@ using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.Sellers;
 using Shop.Presentation.Facade.Sellers.Inventories;
 using Shop.Query.Sellers.DTOs;
+using System.Net;
 
 namespace Shop.Api.Controllers;
 
@@ -63,17 +63,19 @@ public class SellerController : BaseApiController
 
     [HttpPost("AddInventory")]
     [PermissionChecker(Permission.AddInventory)]
-    public async Task<ApiResult> AddInventory(AddSellerInventoryCommand command)
+    public async Task<ApiResult> AddInventory(CreateInventoryModel model)
     {
-        var result = await _sellerInventoryFacade.AddInventory(command);
+        var result = await _sellerInventoryFacade.AddInventory(new
+            AddSellerInventoryCommand(model.SellerId, model.ProductId, model.Count, model.Price, model.PercentageDiscount));
         return CommandResult(result);
     }
 
     [HttpPut("EditInventory")]
     [PermissionChecker(Permission.EditInventory)]
-    public async Task<ApiResult> EditInventory(EditSellerInventoryCommand command)
+    public async Task<ApiResult> EditInventory(EditInventoryModel model)
     {
-        var result = await _sellerInventoryFacade.EditInventory(command);
+        var result = await _sellerInventoryFacade.EditInventory(new EditSellerInventoryCommand(model.SellerId, model.InventoryId, model.Count,
+            model.Price, model.DiscountPercentage));
         return CommandResult(result);
     }
 
@@ -81,7 +83,7 @@ public class SellerController : BaseApiController
     [PermissionChecker(Permission.EditInventory)]
     public async Task<ApiResult<List<InventoryDto>>> GetInventories()
     {
-        var seller =await _sellerFacade.GetSellersByUserId(User.GetUserId());
+        var seller = await _sellerFacade.GetSellersByUserId(User.GetUserId());
         if (seller is null)
             return QueryResult(new List<InventoryDto>());
 
@@ -93,7 +95,7 @@ public class SellerController : BaseApiController
     [PermissionChecker(Permission.EditInventory)]
     public async Task<ApiResult<InventoryDto>> GetInventoryById(long inventoryId)
     {
-        var seller =await _sellerFacade.GetSellersByUserId(User.GetUserId());
+        var seller = await _sellerFacade.GetSellersByUserId(User.GetUserId());
         if (seller is null)
             return QueryResult(new InventoryDto());
 
@@ -103,4 +105,7 @@ public class SellerController : BaseApiController
 
         return QueryResult(result);
     }
+
+
+
 }

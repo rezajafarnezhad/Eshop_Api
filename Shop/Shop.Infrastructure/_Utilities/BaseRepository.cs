@@ -1,8 +1,8 @@
-﻿using System.Linq.Expressions;
-using Common.Domain;
+﻿using Common.Domain;
 using Common.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 using Shop.Infrastructure.Persistent.Ef;
+using System.Linq.Expressions;
 
 namespace Shop.Infrastructure._Utilities;
 
@@ -32,7 +32,7 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
     {
         Context.Set<TEntity>().Add(entity);
     }
-  
+
     public async Task AddRange(ICollection<TEntity> entities)
     {
         await Context.Set<TEntity>().AddRangeAsync(entities);
@@ -60,7 +60,15 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
     }
     public void Delete(long id)
     {
-        var entity= Context.Set<TEntity>().FirstOrDefault(t => t.Id.Equals(id)); ;
+        var entity = Context.Set<TEntity>().FirstOrDefault(t => t.Id.Equals(id)); ;
         Context.Set<TEntity>().Remove(entity);
+    }
+
+    public async Task<Dictionary<long, string>> GetProductsForDropDown()
+    {
+        var data = await Context.Products
+            .Select(c => new { c.Id, c.Title })
+            .ToDictionaryAsync(d => d.Id, d => d.Title);
+        return data;
     }
 }

@@ -1,9 +1,8 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using Microsoft.IdentityModel.Tokens;
+using Shop.Query.Users.DTOs;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using Shop.Domain.UserAgg;
-using Shop.Query.Users.DTOs;
 
 namespace Shop.Api.Infrastructure.jwt;
 
@@ -11,10 +10,12 @@ public class GenerateJwtToke
 {
     public static string GenerateToke(UserDto user, IConfiguration configuration)
     {
+        var roles = user.Roles.Select(c => c.RoleTitle);
         var claims = new List<Claim>()
         {
             new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
             new Claim(ClaimTypes.MobilePhone,user.PhoneNumber),
+            new Claim(ClaimTypes.Role,string.Join("-",roles)),
         };
         //Hash SecurityKey
         var encryptorKey = Encoding.UTF8.GetBytes(configuration["Jwt:secKey"]);
