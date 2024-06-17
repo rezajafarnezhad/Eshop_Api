@@ -57,7 +57,10 @@ builder.Services.AddSwaggerGen(option =>
     });
 });
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
+builder.Services.AddStackExchangeRedisCache(option =>
+{
+    option.Configuration = "localhost:7002";
+});
 builder.Services.RegisterShopDependency(connectionString);
 CommonBootstrapper.Init(builder.Services);
 builder.Services.RegisterApiDependency();

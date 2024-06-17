@@ -28,3 +28,9 @@ public static class ModelStateUtil
         return error;
     }
 }
+
+public class CacheOptions
+{
+    public int ExpireSlidingCacheFromMinutes { get; set; } = 5;
+    public int AbsoluteExpirationCacheFromMinutes { get; set; } = 10;
+}
