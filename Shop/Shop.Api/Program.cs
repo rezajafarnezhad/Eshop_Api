@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using Common.Application;
 using Common.Application.FileUtil.Interfaces;
 using Common.Application.FileUtil.Services;
@@ -63,7 +64,7 @@ builder.Services.AddStackExchangeRedisCache(option =>
 });
 builder.Services.RegisterShopDependency(connectionString);
 CommonBootstrapper.Init(builder.Services);
-builder.Services.RegisterApiDependency();
+builder.Services.RegisterApiDependency(builder.Configuration);
 builder.Services.AddTransient<IFileService, FileService>();
 
 //Jwt
@@ -82,4 +83,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.UseApiCustomExceptionHandler();
+app.UseIpRateLimiting();
 app.Run();

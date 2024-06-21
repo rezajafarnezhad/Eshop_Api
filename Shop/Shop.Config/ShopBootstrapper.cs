@@ -19,9 +19,9 @@ namespace Shop.Config;
 
 public static class ShopBootstrapper
 {
-    public static void RegisterShopDependency(this IServiceCollection services,string connectionString)
+    public static void RegisterShopDependency(this IServiceCollection services, string connectionString)
     {
-        InfrastructureBootstrapper.Init(services,connectionString);
+        InfrastructureBootstrapper.Init(services, connectionString);
         services.AddMediatR(typeof(Directories).Assembly);
         services.AddMediatR(typeof(GetCategoryByIdQuery).Assembly);
         services.AddTransient<IProductDomainService, ProductDomainService>();
@@ -30,5 +30,6 @@ public static class ShopBootstrapper
         services.AddTransient<ISellerDomainService, SellerDomainService>();
         services.AddValidatorsFromAssembly(typeof(CreateRoleCommandValidator).Assembly);
         services.InitFacadeDependency();
+
     }
 }
